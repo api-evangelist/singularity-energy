@@ -1,0 +1,60 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Singularity
+providerId: singularity-energy
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Energy
+- Carbon Emissions
+- Grid
+- Sustainability
+- Carbon Intensity
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  The Singularity Grid Carbon API authenticates requests with an X-Api-Key
+  header (a User-Agent header is also required) and paginates region-event
+  searches via page / per_page parameters. Singularity does not publish specific
+  numeric request-per-minute or per-day rate limits in its public documentation;
+  quotas are governed by the per-region subscription and negotiated commercial
+  terms. Specific throttling values are not reconciled in this artifact.
+notes: >-
+  No public numeric rate limits were found in Singularity's documentation or
+  Python SDK. Data availability is gated by lag (about 1 hour for major ISOs,
+  about 24 hours for non-real-time balancing authorities) rather than by a
+  published call quota. Verify any per-account request limits with Singularity
+  at reconciliation.
+sources:
+- https://docs.singularity.energy/docs/singularity-api/platform-overview
+- https://docs.singularity.energy/docs/singularity-api/key-concepts
+- https://singularity-energy.readthedocs.io/en/latest/full_api.html
+responseCodes:
+  throttled: 429
+limits:
+- name: Request Quota
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: No public per-minute or per-day request quota is documented; governed by subscription terms.
+- name: Region Subscription Scope
+  scope: account
+  metric: regions
+  limit: per subscribed regions
+  notes: Data access is limited to the regions included in the account's per-region subscription.
+- name: Pagination
+  scope: request
+  metric: records
+  limit: page / per_page
+  notes: Region-event search results are paginated via the page and per_page query parameters.
+policies:
+- name: Data Lag
+  description: Carbon intensity and fuel mix lag roughly 1 hour for major ISOs and up to 24 hours for non-real-time balancing authorities.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on HTTP 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,82 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Singularity
+providerId: singularity-energy
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Energy
+- Carbon Emissions
+- Grid
+- Sustainability
+- Carbon Intensity
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Singularity Grid Carbon API spend. Billing is subscription-based
+  and sales-led: a 60-day free trial, then roughly $500 per region per month with
+  a $1,000 monthly minimum and a $2,500 monthly all-regions cap. The primary cost
+  driver is the number of subscribed regions / balancing authorities rather than
+  per-call metering. Figures are from public marketing material and are not
+  reconciled against an order form.
+notes: >-
+  Cost is driven by region count, not request volume. Verify per-region price,
+  monthly minimum, all-regions cap, and any overage terms with Singularity sales
+  at reconciliation. reconciled is false until confirmed.
+sources:
+- https://singularity.energy/grid-carbon-api
+- https://docs.singularity.energy/docs/singularity-api/platform-overview
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Singularity
+serviceCategory: Analytics
+billingModel:
+  pricingCategory: Subscription-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+focusColumns:
+  ServiceName: Grid Carbon API
+  ServiceCategory: Analytics
+  ProviderName: Singularity
+  PublisherName: Singularity
+  InvoiceIssuerName: Singularity
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Subscription-Based
+meters:
+- name: subscribed_regions
+  description: Number of regions / balancing authorities the account subscribes to, billed per region per month.
+  unit: regions
+  aggregation: sum
+  dimensions:
+  - account
+  - region
+- name: monthly_subscription
+  description: Recurring monthly subscription fee subject to a monthly minimum and an all-regions cap.
+  unit: months
+  aggregation: sum
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track which regions / balancing authorities are subscribed and map them to internal use cases.
+- name: Allocation
+  description: Attribute the per-region subscription cost to the teams or products that consume each region's emissions data.
+- name: Optimization
+  description: Subscribe only to regions in use; consider the all-regions cap once subscribed regions approach five; reuse cached intensity and fuel-mix data given the 1-24 hour data lag.
+- name: Accountability
+  description: Review the monthly subscription against the minimum and the all-regions cap; re-evaluate region coverage as footprint changes.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

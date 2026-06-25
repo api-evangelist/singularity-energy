@@ -1,0 +1,180 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Singularity Grid Carbon API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "apikey": {
+        "key": "X-Api-Key",
+        "value": "{{apiKey}}",
+        "in": "header"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search region events over a time window.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singularity.energy/v1/region_events/search?region=ISONE&event_type=carbon_intensity&start=&end=",
+            "params": [
+              { "name": "region", "value": "ISONE", "type": "query", "description": "Region or balancing authority abbreviation." },
+              { "name": "postal_code", "value": "", "type": "query", "description": "Postal code (alternative to region)." },
+              { "name": "event_type", "value": "carbon_intensity", "type": "query", "description": "carbon_intensity | generated_fuel_mix | marginal_fuel_mix | consumed_fuel_mix" },
+              { "name": "start", "value": "", "type": "query", "description": "ISO-8601 start." },
+              { "name": "end", "value": "", "type": "query", "description": "ISO-8601 end." },
+              { "name": "page", "value": "", "type": "query" },
+              { "name": "per_page", "value": "", "type": "query" }
+            ]
+          },
+          "docs": "Search region events for a region or postal code and event type over a time period, with optional filtering and pagination."
+        },
+        {
+          "info": {
+            "name": "Get latest events for a region or postal code.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singularity.energy/v1/region_events/:region_or_postal_code/latest?event_type=carbon_intensity",
+            "params": [
+              { "name": "region_or_postal_code", "value": "ISONE", "type": "path", "description": "Region/BA abbreviation or postal code." },
+              { "name": "event_type", "value": "carbon_intensity", "type": "query", "description": "carbon_intensity | generated_fuel_mix" },
+              { "name": "emission_factor", "value": "", "type": "query", "description": "Optional emission factor source." }
+            ]
+          },
+          "docs": "Retrieve the most recent events for a region or postal code."
+        },
+        {
+          "info": {
+            "name": "Find a single region event by deduplication key.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singularity.energy/v1/region_events/:dedup_key",
+            "params": [
+              { "name": "dedup_key", "value": "", "type": "path", "description": "Deduplication key for the event." }
+            ]
+          },
+          "docs": "Retrieve a single region event by its deduplication key."
+        },
+        {
+          "info": {
+            "name": "Find multiple region events by deduplication keys.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.singularity.energy/v1/region_events/bulk-find",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"dedup_keys\": []\n}"
+            }
+          },
+          "docs": "Retrieve multiple region events by a list of deduplication keys."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Emissions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all emission factor sources and values.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singularity.energy/v1/emissions/all-factors"
+          },
+          "docs": "Retrieve all available emission factor sources and their values."
+        },
+        {
+          "info": {
+            "name": "Calculate generated carbon intensity from a fuel mix.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.singularity.energy/v1/emissions/calculate-intensity/generated",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"genfuelmix\": {},\n  \"region\": \"ISONE\",\n  \"source\": \"\"\n}"
+            }
+          },
+          "docs": "Compute the generated carbon-intensity emissions rate (lbs/MWh) for a supplied generated fuel mix."
+        },
+        {
+          "info": {
+            "name": "Calculate marginal carbon intensity from fuel mix percentages.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.singularity.energy/v1/emissions/calculate-intensity/marginal",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"fuelmix_percents\": {},\n  \"region\": \"ISONE\",\n  \"source\": \"\"\n}"
+            }
+          },
+          "docs": "Compute the marginal carbon-intensity emissions rate (lbs/MWh) for supplied marginal fuel mix percentages."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Interchange",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get interchange (power flow) events between regions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singularity.energy/v2/interchange?region=ISONE",
+            "params": [
+              { "name": "region", "value": "ISONE", "type": "query" },
+              { "name": "start", "value": "", "type": "query" },
+              { "name": "end", "value": "", "type": "query" }
+            ]
+          },
+          "docs": "Return interchange / region-flow events describing power flow between regions over a time window."
+        },
+        {
+          "info": {
+            "name": "Get the latest interchange event for a region.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singularity.energy/v2/interchange/latest?region=ISONE",
+            "params": [
+              { "name": "region", "value": "ISONE", "type": "query" }
+            ]
+          },
+          "docs": "Return the latest interchange event for a region."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

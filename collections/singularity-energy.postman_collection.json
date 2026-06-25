@@ -1,0 +1,225 @@
+{
+  "info": {
+    "name": "Singularity Grid Carbon API",
+    "description": "Singularity Energy Grid Carbon API - hourly, location-specific electricity grid emissions intelligence (carbon intensity, fuel mix, forecasts, interchange) across ISOs and balancing authorities in the U.S. and Canada. Authenticate with an X-Api-Key header (a User-Agent header is also required).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      { "key": "key", "value": "X-Api-Key", "type": "string" },
+      { "key": "value", "value": "{{apiKey}}", "type": "string" },
+      { "key": "in", "value": "header", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.singularity.energy" },
+    { "key": "apiKey", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Search region events over a time window",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "User-Agent", "value": "apis-io" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/region_events/search?region=ISONE&event_type=carbon_intensity&start=&end=",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "region_events", "search"],
+              "query": [
+                { "key": "region", "value": "ISONE", "description": "Region or balancing authority abbreviation." },
+                { "key": "postal_code", "value": "", "description": "Postal code (alternative to region).", "disabled": true },
+                { "key": "event_type", "value": "carbon_intensity", "description": "carbon_intensity | generated_fuel_mix | marginal_fuel_mix | consumed_fuel_mix" },
+                { "key": "start", "value": "", "description": "ISO-8601 start." },
+                { "key": "end", "value": "", "description": "ISO-8601 end." },
+                { "key": "page", "value": "", "disabled": true },
+                { "key": "per_page", "value": "", "disabled": true }
+              ]
+            },
+            "description": "Search region events for a region or postal code and event type over a time period, with optional filtering and pagination."
+          },
+          "response": []
+        },
+        {
+          "name": "Get latest events for a region or postal code",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "User-Agent", "value": "apis-io" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/region_events/:region_or_postal_code/latest?event_type=carbon_intensity",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "region_events", ":region_or_postal_code", "latest"],
+              "query": [
+                { "key": "event_type", "value": "carbon_intensity", "description": "carbon_intensity | generated_fuel_mix" },
+                { "key": "emission_factor", "value": "", "description": "Optional emission factor source.", "disabled": true }
+              ],
+              "variable": [
+                { "key": "region_or_postal_code", "value": "ISONE", "description": "Region/BA abbreviation or postal code." }
+              ]
+            },
+            "description": "Retrieve the most recent events for a region or postal code."
+          },
+          "response": []
+        },
+        {
+          "name": "Find a single region event by deduplication key",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "User-Agent", "value": "apis-io" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/region_events/:dedup_key",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "region_events", ":dedup_key"],
+              "variable": [
+                { "key": "dedup_key", "value": "", "description": "Deduplication key for the event." }
+              ]
+            },
+            "description": "Retrieve a single region event by its deduplication key."
+          },
+          "response": []
+        },
+        {
+          "name": "Find multiple region events by deduplication keys",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "User-Agent", "value": "apis-io" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dedup_keys\": []\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/region_events/bulk-find",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "region_events", "bulk-find"]
+            },
+            "description": "Retrieve multiple region events by a list of deduplication keys."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Emissions",
+      "item": [
+        {
+          "name": "List all emission factor sources and values",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "User-Agent", "value": "apis-io" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v1/emissions/all-factors",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "emissions", "all-factors"]
+            },
+            "description": "Retrieve all available emission factor sources and their values."
+          },
+          "response": []
+        },
+        {
+          "name": "Calculate generated carbon intensity from a fuel mix",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "User-Agent", "value": "apis-io" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"genfuelmix\": {},\n  \"region\": \"ISONE\",\n  \"source\": \"\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/emissions/calculate-intensity/generated",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "emissions", "calculate-intensity", "generated"]
+            },
+            "description": "Compute the generated carbon-intensity emissions rate (lbs/MWh) for a supplied generated fuel mix."
+          },
+          "response": []
+        },
+        {
+          "name": "Calculate marginal carbon intensity from fuel mix percentages",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "User-Agent", "value": "apis-io" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fuelmix_percents\": {},\n  \"region\": \"ISONE\",\n  \"source\": \"\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/v1/emissions/calculate-intensity/marginal",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "emissions", "calculate-intensity", "marginal"]
+            },
+            "description": "Compute the marginal carbon-intensity emissions rate (lbs/MWh) for supplied marginal fuel mix percentages."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Interchange",
+      "item": [
+        {
+          "name": "Get interchange (power flow) events between regions",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "User-Agent", "value": "apis-io" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v2/interchange?region=ISONE",
+              "host": ["{{baseUrl}}"],
+              "path": ["v2", "interchange"],
+              "query": [
+                { "key": "region", "value": "ISONE" },
+                { "key": "start", "value": "", "disabled": true },
+                { "key": "end", "value": "", "disabled": true }
+              ]
+            },
+            "description": "Return interchange / region-flow events describing power flow between regions over a time window."
+          },
+          "response": []
+        },
+        {
+          "name": "Get the latest interchange event for a region",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "User-Agent", "value": "apis-io" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v2/interchange/latest?region=ISONE",
+              "host": ["{{baseUrl}}"],
+              "path": ["v2", "interchange", "latest"],
+              "query": [
+                { "key": "region", "value": "ISONE" }
+              ]
+            },
+            "description": "Return the latest interchange event for a region."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

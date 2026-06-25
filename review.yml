@@ -1,0 +1,106 @@
+aid: singularity-energy
+name: Singularity
+review:
+  question: Does Singularity Energy expose a documented public REST API, and is the company independent or acquired?
+  answer: true
+  date: '2026-06-21'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No WebSocket or Server-Sent Events streaming surface is documented for the
+    Singularity Grid Carbon API. Real-time delivery is offered via Webhooks
+    (event-driven HTTP callbacks) and via the REST region-events / interchange
+    endpoints. Webhooks are out of scope for AsyncAPI modeling here and no
+    AsyncAPI document was created.
+findings:
+  summary: |
+    Singularity Energy publishes a real, documented REST API - the Grid Carbon
+    API - at base URL https://api.singularity.energy. Authentication is an API
+    key sent in the X-Api-Key header (a User-Agent header is also required); it
+    is not Bearer. Endpoint paths and request shapes are confirmed from the
+    public docs (docs.singularity.energy / Stoplight) and the official
+    open-source Python SDK (github.com/singularity-energy/singularity-energy-python-sdk).
+    The API surfaces region events (carbon_intensity, generated_fuel_mix,
+    marginal_fuel_mix, consumed_fuel_mix) plus emission-factor calculation and
+    v2 interchange endpoints. Pricing is sales-led (60-day free trial, then
+    ~$500/region/month, $1,000/month minimum, $2,500/month all-regions cap), so
+    plans/rate-limits/finops are marked reconciled:false. Forecasting (hourly,
+    up to 48 hours ahead) and nowcasting are documented as product capabilities;
+    they are surfaced through the same region-events endpoints rather than a
+    separate forecast path.
+  companyStatus:
+    independent: true
+    note: |
+      As of the review date, Singularity Energy appears to be an independent,
+      Boston-based company (founded 2018, CEO/founder Wenbo Shi), backed by
+      Energy Impact Partners, Spero Ventures, and Third Sphere. No acquisition
+      of Singularity Energy was found in public sources, and no acquisition of
+      WattTime or REsurety by Singularity was found. The often-confused REsurety
+      was itself acquired/invested in by S2G; that is a separate company.
+      Acquisition status should be re-verified at reconciliation.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.singularity.energy
+      documented: true
+    - protocol: Webhooks
+      scheme: https
+      note: Event-driven HTTP callbacks offered for real-time updates per the product docs.
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented.
+  endpointsConfirmedRest:
+    - GET  https://api.singularity.energy/v1/region_events/search
+    - GET  https://api.singularity.energy/v1/region_events/{region_or_postal_code}/latest
+    - GET  https://api.singularity.energy/v1/region_events/{dedup_key}
+    - POST https://api.singularity.energy/v1/region_events/bulk-find
+    - GET  https://api.singularity.energy/v1/emissions/all-factors
+    - POST https://api.singularity.energy/v1/emissions/calculate-intensity/generated
+    - POST https://api.singularity.energy/v1/emissions/calculate-intensity/marginal
+    - GET  https://api.singularity.energy/v2/interchange
+    - GET  https://api.singularity.energy/v2/interchange/latest
+  auth:
+    type: apiKey
+    header: X-Api-Key
+    note: A User-Agent header is also required. Not Bearer.
+  coverage:
+    regionsKnown:
+      - ISONE
+      - NYISO
+      - PJM
+      - IESO
+      - CAISO
+      - MISO
+      - SPP
+      - BPA
+    note: |
+      Marketing material cites coverage of 76 ISOs and balancing authorities
+      across the U.S. and Canada, with 8 ISOs available in real time. The list
+      above are regions explicitly named in the Python SDK / docs.
+sources:
+  - url: https://docs.singularity.energy/docs/singularity-api/platform-overview
+    type: Documentation
+    note: Platform overview for the Grid Carbon API.
+  - url: https://docs.singularity.energy/docs/singularity-api/key-concepts
+    type: APIReference
+    note: Key concepts - regions, event types, data lag, dedup keys.
+  - url: https://singularity-energy.readthedocs.io/en/latest/full_api.html
+    type: Documentation
+    note: Python SDK API reference; confirms base URL api.singularity.energy and X-Api-Key auth.
+  - url: https://github.com/singularity-energy/singularity-energy-python-sdk
+    type: SourceCode
+    note: Official SDK; literal /v1 and /v2 endpoint paths confirmed from source.
+  - url: https://singularity.energy/grid-carbon-api
+    type: Pricing
+    note: Product/pricing page - 60-day trial, $500/region/mo, $1,000 minimum, $2,500 all-regions cap.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    Catalog built from documented REST endpoints and the official open-source
+    Python SDK. No streaming (WebSocket/SSE) surface exists, so no AsyncAPI
+    document was authored. Pricing is sales-led; plans, rate-limits, and finops
+    artifacts are marked reconciled:false pending confirmation against a
+    Singularity order form.

@@ -1,0 +1,120 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Singularity
+providerId: singularity-energy
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Energy
+- Carbon Emissions
+- Grid
+- Sustainability
+- Carbon Intensity
+- Plans
+description: >-
+  Singularity's Grid Carbon API is offered through a sales-led model. Published
+  marketing material describes a 60-day free trial, then $500 per region per
+  month with a $1,000 monthly minimum, capped at $2,500 per month to unlock all
+  regions. Exact, current commercial terms are negotiated with Singularity sales
+  and are not fully reconciled from a self-serve pricing page.
+notes: >-
+  Pricing reflects figures published on the singularity.energy Grid Carbon API
+  product page and may change. Engagement is sales-led; verify the trial length,
+  per-region price, monthly minimum, and all-regions cap with Singularity at
+  reconciliation. reconciled is false until confirmed against an order form.
+sources:
+- https://singularity.energy/grid-carbon-api
+- https://docs.singularity.energy/docs/singularity-api/platform-overview
+plans:
+- id: singularity-free-trial
+  name: Free Trial
+  type: trial
+  description: >-
+    Complimentary access to the Grid Carbon API for the first 60 days to evaluate
+    the data and integration.
+  entries:
+  - label: 60-Day Trial
+    name: free_trial
+    type: trial
+    metric: days
+    limit: 60
+    timeFrame: day
+    geo: global
+    unit: 1
+    price: $0
+    userMultiplied: false
+  elements:
+  - name: Carbon Intensity
+  - name: Fuel Mix
+  - name: Forecasts
+  - name: Interchange
+- id: singularity-per-region
+  name: Per-Region Subscription
+  type: subscription
+  description: >-
+    Per-region monthly subscription to the Grid Carbon API with a monthly
+    minimum and an all-regions cap. Sales-led; contact Singularity.
+  entries:
+  - label: Per Region
+    name: per_region
+    type: recurring
+    metric: region
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $500 per region / month
+    userMultiplied: true
+  - label: Monthly Minimum
+    name: monthly_minimum
+    type: recurring
+    metric: contract
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $1,000 / month minimum
+    userMultiplied: false
+  - label: All-Regions Cap
+    name: all_regions_cap
+    type: recurring
+    metric: contract
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $2,500 / month (unlocks all regions)
+    userMultiplied: false
+  elements:
+  - name: Carbon Intensity
+  - name: Generated / Marginal / Consumed Fuel Mix
+  - name: Emissions Forecasts
+  - name: Interchange
+  - name: Webhooks
+- id: singularity-enterprise
+  name: Enterprise / Utility & Grid Operator
+  type: enterprise
+  description: >-
+    Custom agreements for utilities, grid operators, and enterprises - full-stack
+    clean energy management, 24/7 generation-to-consumption matching, carbon
+    accounting, and reporting. Contact Singularity sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Utility & Grid Operator Solutions
+  - name: Clean Energy Certificate Management
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

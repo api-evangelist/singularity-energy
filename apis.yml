@@ -1,0 +1,124 @@
+aid: singularity-energy
+url: https://raw.githubusercontent.com/api-evangelist/singularity-energy/refs/heads/main/apis.yml
+name: Singularity
+kind: company
+description: Singularity Energy is a Boston-based grid decarbonization data company. Its
+  Grid Carbon API delivers hourly, location-specific electricity emissions intelligence
+  - generated, consumed, and marginal carbon intensity, fuel mix, generation events,
+  interchange, and 48-hour emissions forecasts across ISOs and balancing authorities
+  in the U.S. and Canada.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Energy
+- Carbon Emissions
+- Grid
+- Sustainability
+- Carbon Intensity
+created: '2026-06-21'
+modified: '2026-06-21'
+specificationVersion: '0.19'
+apis:
+- aid: singularity-energy:carbon-intensity-api
+  name: Singularity Carbon Intensity API
+  tags:
+  - Carbon Intensity
+  - Emissions
+  - Marginal Emissions
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.singularity.energy/docs/singularity-api/grid-carbon-api
+  baseURL: https://api.singularity.energy
+  properties:
+  - url: https://docs.singularity.energy/docs/singularity-api/grid-carbon-api
+    type: Documentation
+  - url: https://docs.singularity.energy/docs/singularity-api/key-concepts
+    type: APIReference
+  - url: openapi/singularity-energy-openapi.yml
+    type: OpenAPI
+  - url: collections/singularity-energy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/singularity-energy.opencollection.json
+    type: OpenCollection
+  description: Generated, consumed, and marginal carbon-intensity (lbs/MWh) emission
+    factors for regions and balancing authorities, plus on-demand intensity
+    calculation from a supplied fuel mix and a catalog of emission factor sources.
+- aid: singularity-energy:forecasts-api
+  name: Singularity Forecasts API
+  tags:
+  - Forecasts
+  - Emissions
+  - Nowcasting
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.singularity.energy/docs/singularity-api/grid-carbon-api
+  baseURL: https://api.singularity.energy
+  properties:
+  - url: https://docs.singularity.energy/docs/singularity-api/grid-carbon-api
+    type: Documentation
+  - url: openapi/singularity-energy-openapi.yml
+    type: OpenAPI
+  - url: collections/singularity-energy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/singularity-energy.opencollection.json
+    type: OpenCollection
+  description: Generated-emissions nowcasting and hourly forecasting up to 48 hours
+    ahead, surfaced as forecast event types through the region events search and
+    latest-events endpoints.
+- aid: singularity-energy:generation-event-data-api
+  name: Singularity Generation & Event Data API
+  tags:
+  - Generation
+  - Fuel Mix
+  - Events
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.singularity.energy/docs/singularity-api/key-concepts
+  baseURL: https://api.singularity.energy
+  properties:
+  - url: https://docs.singularity.energy/docs/singularity-api/key-concepts
+    type: Documentation
+  - url: openapi/singularity-energy-openapi.yml
+    type: OpenAPI
+  - url: collections/singularity-energy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/singularity-energy.opencollection.json
+    type: OpenCollection
+  description: Search, look up, and stream region events - generated/marginal/consumed
+    fuel mix, carbon intensity, and interchange - by region or postal code, by time
+    window, by deduplication key, or in bulk, with latest-event retrieval.
+- aid: singularity-energy:regions-api
+  name: Singularity Regions API
+  tags:
+  - Regions
+  - Balancing Authorities
+  - Interchange
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.singularity.energy/docs/singularity-api/region-flow
+  baseURL: https://api.singularity.energy
+  properties:
+  - url: https://docs.singularity.energy/docs/singularity-api/region-flow
+    type: Documentation
+  - url: openapi/singularity-energy-openapi.yml
+    type: OpenAPI
+  - url: collections/singularity-energy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/singularity-energy.opencollection.json
+    type: OpenCollection
+  description: Region and balancing-authority coverage, postal-code resolution, and
+    inter-region interchange (power flow) events including a latest-interchange
+    endpoint, spanning 76 ISOs and balancing authorities across the U.S. and Canada.
+common:
+- type: GitHubOrganization
+  url: https://github.com/singularity-energy
+- type: LinkedIn
+  url: https://www.linkedin.com/company/singularity-energy
+- type: Website
+  url: https://www.singularity.energy
+- type: Documentation
+  url: https://docs.singularity.energy
+- type: Plans
+  url: plans/singularity-energy-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/singularity-energy-rate-limits.yml
+- type: FinOps
+  url: finops/singularity-energy-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
