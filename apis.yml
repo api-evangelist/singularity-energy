@@ -105,6 +105,12 @@ apis:
     inter-region interchange (power flow) events including a latest-interchange
     endpoint, spanning 76 ISOs and balancing authorities across the U.S. and Canada.
 common:
+- type: DomainSecurity
+  url: security/singularity-energy-domain-security.yml
+- type: Authentication
+  url: authentication/singularity-energy-authentication.yml
+- url: https://medium.com/feed/singularity-energy
+  type: Blog
 - type: GitHubOrganization
   url: https://github.com/singularity-energy
 - type: LinkedIn
