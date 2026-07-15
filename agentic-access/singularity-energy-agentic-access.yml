@@ -1,0 +1,124 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/singularity-energy-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 9
+  by_action_class:
+    connected: 6
+    acting: 3
+  by_consequence:
+    read: 6
+    write: 3
+  human_in_the_loop_required: 0
+operations:
+- path: /v1/region_events/search
+  method: get
+  operationId: searchRegionEvents
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/region_events/{region_or_postal_code}/latest
+  method: get
+  operationId: latestRegionEvents
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/region_events/{dedup_key}
+  method: get
+  operationId: findRegionEvent
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/region_events/bulk-find
+  method: post
+  operationId: findAllRegionEvents
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/emissions/all-factors
+  method: get
+  operationId: getAllEmissionFactors
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/emissions/calculate-intensity/generated
+  method: post
+  operationId: calculateGeneratedCarbonIntensity
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/emissions/calculate-intensity/marginal
+  method: post
+  operationId: calculateMarginalCarbonIntensity
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/interchange
+  method: get
+  operationId: getInterchange
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/interchange/latest
+  method: get
+  operationId: getLatestInterchange
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
