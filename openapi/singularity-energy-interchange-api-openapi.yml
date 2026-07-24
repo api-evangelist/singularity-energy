@@ -1,0 +1,109 @@
+openapi: 3.0.1
+info:
+  title: Singularity Grid Carbon Emissions Interchange API
+  description: The Singularity Grid Carbon API provides hourly, location-specific electricity grid emissions intelligence - generated, consumed, and marginal carbon intensity, fuel mix, generation events, interchange (power flow), and emissions forecasts - across ISOs and balancing authorities in the U.S. and Canada. Endpoints and request shapes below are derived from Singularity's public documentation and the official open-source Python SDK (singularity-energy-python-sdk). Field-level schemas are documented at a representative level; consult the official docs for exhaustive response bodies.
+  termsOfService: https://singularity.energy
+  contact:
+    name: Singularity Support
+    email: support@singularity.energy
+  version: '1.0'
+servers:
+- url: https://api.singularity.energy
+  description: Singularity Grid Carbon API
+security:
+- ApiKeyAuth: []
+tags:
+- name: Interchange
+paths:
+  /v2/interchange:
+    get:
+      operationId: getInterchange
+      tags:
+      - Interchange
+      summary: Get interchange (power flow) events between regions
+      description: Returns interchange / region-flow events describing power flow between regions over a time window.
+      parameters:
+      - name: region
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: start
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: end
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: Interchange events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionEventList'
+  /v2/interchange/latest:
+    get:
+      operationId: getLatestInterchange
+      tags:
+      - Interchange
+      summary: Get the latest interchange (power flow) event for a region
+      parameters:
+      - name: region
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The latest interchange event.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionEvent'
+components:
+  schemas:
+    RegionEvent:
+      type: object
+      description: A region event record (e.g. carbon intensity, fuel mix, or interchange) at a point in time.
+      properties:
+        dedup_key:
+          type: string
+          description: Deduplication key uniquely identifying the event.
+        region:
+          type: string
+        event_type:
+          type: string
+          enum:
+          - carbon_intensity
+          - generated_fuel_mix
+          - marginal_fuel_mix
+          - consumed_fuel_mix
+          - interchange
+        start_date:
+          type: string
+          format: date-time
+        data:
+          type: object
+          description: Event payload (intensity value in lbs/MWh, fuel-mix breakdown, or interchange values), shape varies by event_type.
+    RegionEventList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegionEvent'
+        meta:
+          type: object
+          description: Pagination metadata (page, per_page, totals).
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: API key passed in the X-Api-Key request header. A User-Agent header is also required.

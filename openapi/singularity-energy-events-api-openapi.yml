@@ -1,0 +1,207 @@
+openapi: 3.0.1
+info:
+  title: Singularity Grid Carbon Emissions Events API
+  description: The Singularity Grid Carbon API provides hourly, location-specific electricity grid emissions intelligence - generated, consumed, and marginal carbon intensity, fuel mix, generation events, interchange (power flow), and emissions forecasts - across ISOs and balancing authorities in the U.S. and Canada. Endpoints and request shapes below are derived from Singularity's public documentation and the official open-source Python SDK (singularity-energy-python-sdk). Field-level schemas are documented at a representative level; consult the official docs for exhaustive response bodies.
+  termsOfService: https://singularity.energy
+  contact:
+    name: Singularity Support
+    email: support@singularity.energy
+  version: '1.0'
+servers:
+- url: https://api.singularity.energy
+  description: Singularity Grid Carbon API
+security:
+- ApiKeyAuth: []
+tags:
+- name: Events
+paths:
+  /v1/region_events/search:
+    get:
+      operationId: searchRegionEvents
+      tags:
+      - Events
+      summary: Search region events over a time window
+      description: Search region events for a region (or postal code) and event type over a time period, with optional filtering and pagination. Event types include carbon_intensity, generated_fuel_mix, marginal_fuel_mix, and consumed_fuel_mix.
+      parameters:
+      - name: region
+        in: query
+        required: false
+        description: Region or balancing authority abbreviation (e.g. ISONE, NYISO, PJM, IESO, CAISO, MISO, SPP, BPA). Mutually exclusive with postal_code.
+        schema:
+          type: string
+      - name: postal_code
+        in: query
+        required: false
+        description: Postal code to resolve to a region (supported for ISONE, NYISO, PJM). Mutually exclusive with region.
+        schema:
+          type: string
+      - name: event_type
+        in: query
+        required: true
+        description: Event type to retrieve.
+        schema:
+          type: string
+          enum:
+          - carbon_intensity
+          - generated_fuel_mix
+          - marginal_fuel_mix
+          - consumed_fuel_mix
+      - name: start
+        in: query
+        required: true
+        description: ISO-8601 start of the time window.
+        schema:
+          type: string
+          format: date-time
+      - name: end
+        in: query
+        required: true
+        description: ISO-8601 end of the time window.
+        schema:
+          type: string
+          format: date-time
+      - name: filter
+        in: query
+        required: false
+        description: Optional filter expression.
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A paginated list of region events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionEventList'
+  /v1/region_events/{region_or_postal_code}/latest:
+    get:
+      operationId: latestRegionEvents
+      tags:
+      - Events
+      summary: Get latest events for a region or postal code
+      description: Retrieve the most recent events for a region or postal code. Supports the carbon_intensity and generated_fuel_mix event types and an optional emission factor source.
+      parameters:
+      - name: region_or_postal_code
+        in: path
+        required: true
+        description: Region/balancing-authority abbreviation or a postal code.
+        schema:
+          type: string
+      - name: event_type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - carbon_intensity
+          - generated_fuel_mix
+      - name: emission_factor
+        in: query
+        required: false
+        description: Optional emission factor source to apply.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The latest event(s) for the region or postal code.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionEvent'
+  /v1/region_events/{dedup_key}:
+    get:
+      operationId: findRegionEvent
+      tags:
+      - Events
+      summary: Find a single region event by deduplication key
+      parameters:
+      - name: dedup_key
+        in: path
+        required: true
+        description: Deduplication key uniquely identifying a region event.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A single region event.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionEvent'
+  /v1/region_events/bulk-find:
+    post:
+      operationId: findAllRegionEvents
+      tags:
+      - Events
+      summary: Find multiple region events by deduplication keys
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dedup_keys:
+                  type: array
+                  items:
+                    type: string
+              required:
+              - dedup_keys
+      responses:
+        '200':
+          description: The requested region events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionEventList'
+components:
+  schemas:
+    RegionEvent:
+      type: object
+      description: A region event record (e.g. carbon intensity, fuel mix, or interchange) at a point in time.
+      properties:
+        dedup_key:
+          type: string
+          description: Deduplication key uniquely identifying the event.
+        region:
+          type: string
+        event_type:
+          type: string
+          enum:
+          - carbon_intensity
+          - generated_fuel_mix
+          - marginal_fuel_mix
+          - consumed_fuel_mix
+          - interchange
+        start_date:
+          type: string
+          format: date-time
+        data:
+          type: object
+          description: Event payload (intensity value in lbs/MWh, fuel-mix breakdown, or interchange values), shape varies by event_type.
+    RegionEventList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegionEvent'
+        meta:
+          type: object
+          description: Pagination metadata (page, per_page, totals).
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: API key passed in the X-Api-Key request header. A User-Agent header is also required.

@@ -1,0 +1,121 @@
+openapi: 3.0.1
+info:
+  title: Singularity Grid Carbon Emissions API
+  description: The Singularity Grid Carbon API provides hourly, location-specific electricity grid emissions intelligence - generated, consumed, and marginal carbon intensity, fuel mix, generation events, interchange (power flow), and emissions forecasts - across ISOs and balancing authorities in the U.S. and Canada. Endpoints and request shapes below are derived from Singularity's public documentation and the official open-source Python SDK (singularity-energy-python-sdk). Field-level schemas are documented at a representative level; consult the official docs for exhaustive response bodies.
+  termsOfService: https://singularity.energy
+  contact:
+    name: Singularity Support
+    email: support@singularity.energy
+  version: '1.0'
+servers:
+- url: https://api.singularity.energy
+  description: Singularity Grid Carbon API
+security:
+- ApiKeyAuth: []
+tags:
+- name: Emissions
+paths:
+  /v1/emissions/all-factors:
+    get:
+      operationId: getAllEmissionFactors
+      tags:
+      - Emissions
+      summary: List all emission factor sources and values
+      description: Retrieves all available emission factor sources and their values.
+      responses:
+        '200':
+          description: A catalog of emission factor sources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmissionFactors'
+  /v1/emissions/calculate-intensity/generated:
+    post:
+      operationId: calculateGeneratedCarbonIntensity
+      tags:
+      - Emissions
+      summary: Calculate generated carbon intensity from a fuel mix
+      description: Computes the generated carbon-intensity emissions rate (lbs/MWh) for a supplied generated fuel mix, region, and emission factor source.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GeneratedIntensityRequest'
+      responses:
+        '200':
+          description: The computed generated carbon intensity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntensityResult'
+  /v1/emissions/calculate-intensity/marginal:
+    post:
+      operationId: calculateMarginalCarbonIntensity
+      tags:
+      - Emissions
+      summary: Calculate marginal carbon intensity from fuel mix percentages
+      description: Computes the marginal carbon-intensity emissions rate (lbs/MWh) for supplied marginal fuel mix percentages, region, and emission factor source.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarginalIntensityRequest'
+      responses:
+        '200':
+          description: The computed marginal carbon intensity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntensityResult'
+components:
+  schemas:
+    IntensityResult:
+      type: object
+      properties:
+        carbon_intensity:
+          type: number
+          description: Computed emissions rate in lbs/MWh.
+        region:
+          type: string
+        source:
+          type: string
+    EmissionFactors:
+      type: object
+      description: Catalog of emission factor sources and their values, keyed by source.
+      additionalProperties: true
+    GeneratedIntensityRequest:
+      type: object
+      properties:
+        genfuelmix:
+          type: object
+          description: Generated fuel mix (fuel category to generation amount).
+        region:
+          type: string
+        source:
+          type: string
+          description: Emission factor source to use.
+      required:
+      - genfuelmix
+      - region
+    MarginalIntensityRequest:
+      type: object
+      properties:
+        fuelmix_percents:
+          type: object
+          description: Marginal fuel mix as percentages by fuel category.
+        region:
+          type: string
+        source:
+          type: string
+          description: Emission factor source to use.
+      required:
+      - fuelmix_percents
+      - region
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: API key passed in the X-Api-Key request header. A User-Agent header is also required.
