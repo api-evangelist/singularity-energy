@@ -1,0 +1,18 @@
+{
+  "provider": "singularity-energy",
+  "sources": [
+    "singularity-energy-emissions-api-openapi.yml",
+    "singularity-energy-events-api-openapi.yml",
+    "singularity-energy-interchange-api-openapi.yml"
+  ],
+  "outputs": [
+    "singularity-energy-emissions-api-openapi.yml",
+    "singularity-energy-events-api-openapi.yml",
+    "singularity-energy-interchange-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
