@@ -1,0 +1,341 @@
+{
+  "item": [
+    {
+      "id": "41361132-db7a-497f-a2e8-9d1a3ce70afe",
+      "name": "Emissions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f751fbf9-a043-4426-83f4-0afecb78a477",
+          "name": "List all emission factor sources and values",
+          "request": {
+            "name": "List all emission factor sources and values",
+            "description": {
+              "content": "Retrieves all available emission factor sources and their values.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "emissions",
+                "all-factors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bf9c4b15-d0b9-46a8-bd52-4876bbd95720",
+              "name": "A catalog of emission factor sources.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "emissions",
+                    "all-factors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": \"string\",\n  \"key_1\": 6283.164722851028\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dfa160f1-9e22-4ddd-82ef-ee8e7aceaab1",
+          "name": "Calculate generated carbon intensity from a fuel mix",
+          "request": {
+            "name": "Calculate generated carbon intensity from a fuel mix",
+            "description": {
+              "content": "Computes the generated carbon-intensity emissions rate (lbs/MWh) for a supplied generated fuel mix, region, and emission factor source.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "emissions",
+                "calculate-intensity",
+                "generated"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"genfuelmix\": \"<object>\",\n  \"region\": \"<string>\",\n  \"source\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "96a5717f-da3e-4c23-b780-c13e838bd952",
+              "name": "The computed generated carbon intensity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "emissions",
+                    "calculate-intensity",
+                    "generated"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"genfuelmix\": \"<object>\",\n  \"region\": \"<string>\",\n  \"source\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"carbon_intensity\": 4406.945965170019,\n  \"region\": \"string\",\n  \"source\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3fb206ba-1a85-438f-8ccd-a38fdc476454",
+          "name": "Calculate marginal carbon intensity from fuel mix percentages",
+          "request": {
+            "name": "Calculate marginal carbon intensity from fuel mix percentages",
+            "description": {
+              "content": "Computes the marginal carbon-intensity emissions rate (lbs/MWh) for supplied marginal fuel mix percentages, region, and emission factor source.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "emissions",
+                "calculate-intensity",
+                "marginal"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fuelmix_percents\": \"<object>\",\n  \"region\": \"<string>\",\n  \"source\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c77c7c19-62b6-4724-a238-9818ae1813d5",
+              "name": "The computed marginal carbon intensity.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "emissions",
+                    "calculate-intensity",
+                    "marginal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fuelmix_percents\": \"<object>\",\n  \"region\": \"<string>\",\n  \"source\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"carbon_intensity\": 4406.945965170019,\n  \"region\": \"string\",\n  \"source\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.singularity.energy",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1152e837-ab2b-4fc7-954f-cca69cc01d55",
+    "name": "Singularity Grid Carbon Emissions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Singularity Grid Carbon API provides hourly, location-specific electricity grid emissions intelligence - generated, consumed, and marginal carbon intensity, fuel mix, generation events, interchange (power flow), and emissions forecasts - across ISOs and balancing authorities in the U.S. and Canada. Endpoints and request shapes below are derived from Singularity's public documentation and the official open-source Python SDK (singularity-energy-python-sdk). Field-level schemas are documented at a representative level; consult the official docs for exhaustive response bodies.\n\nContact Support:\n Name: Singularity Support\n Email: support@singularity.energy",
+      "type": "text/plain"
+    }
+  }
+}

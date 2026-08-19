@@ -1,0 +1,250 @@
+{
+  "item": [
+    {
+      "id": "6e51ddfe-da7b-46d3-a840-5589aa177d12",
+      "name": "Interchange",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "840f1636-1861-4542-be19-9d8a80577789",
+          "name": "Get interchange (power flow) events between regions",
+          "request": {
+            "name": "Get interchange (power flow) events between regions",
+            "description": {
+              "content": "Returns interchange / region-flow events describing power flow between regions over a time window.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "interchange"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<dateTime>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "19561373-7010-48d8-9b9a-6f5c29fd5ce6",
+              "name": "Interchange events.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "interchange"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"dedup_key\": \"string\",\n      \"region\": \"string\",\n      \"event_type\": \"carbon_intensity\",\n      \"start_date\": \"2023-12-22T10:17:49.985Z\",\n      \"data\": {}\n    },\n    {\n      \"dedup_key\": \"string\",\n      \"region\": \"string\",\n      \"event_type\": \"carbon_intensity\",\n      \"start_date\": \"2022-07-29T20:59:10.004Z\",\n      \"data\": {}\n    }\n  ],\n  \"meta\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50c93396-0356-4a0a-b321-5f6114e1601f",
+          "name": "Get the latest interchange (power flow) event for a region",
+          "request": {
+            "name": "Get the latest interchange (power flow) event for a region",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "interchange",
+                "latest"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3d775eb0-93d7-4ee6-be37-ee1223dcb40b",
+              "name": "The latest interchange event.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "interchange",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dedup_key\": \"string\",\n  \"region\": \"string\",\n  \"event_type\": \"carbon_intensity\",\n  \"start_date\": \"2024-10-17T07:27:17.423Z\",\n  \"data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.singularity.energy",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "20e59012-c407-4270-8bda-c99c8328ecfd",
+    "name": "Singularity Grid Carbon Emissions Interchange API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Singularity Grid Carbon API provides hourly, location-specific electricity grid emissions intelligence - generated, consumed, and marginal carbon intensity, fuel mix, generation events, interchange (power flow), and emissions forecasts - across ISOs and balancing authorities in the U.S. and Canada. Endpoints and request shapes below are derived from Singularity's public documentation and the official open-source Python SDK (singularity-energy-python-sdk). Field-level schemas are documented at a representative level; consult the official docs for exhaustive response bodies.\n\nContact Support:\n Name: Singularity Support\n Email: support@singularity.energy",
+      "type": "text/plain"
+    }
+  }
+}

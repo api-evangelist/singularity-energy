@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Singularity Grid Carbon Emissions Events API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search region events over a time window",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singularity.energy/v1/region_events/search",
+            "params": [
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "Region or balancing authority abbreviation (e.g. ISONE, NYISO, PJM, IESO, CAISO, MISO, SPP, BPA). Mutually exclusive with postal_code."
+              },
+              {
+                "name": "postal_code",
+                "value": "",
+                "type": "query",
+                "description": "Postal code to resolve to a region (supported for ISONE, NYISO, PJM). Mutually exclusive with region."
+              },
+              {
+                "name": "event_type",
+                "value": "",
+                "type": "query",
+                "description": "Event type to retrieve."
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "ISO-8601 start of the time window."
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query",
+                "description": "ISO-8601 end of the time window."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Optional filter expression."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search region events for a region (or postal code) and event type over a time period, with optional filtering and pagination. Event types include carbon_intensity, generated_fuel_mix, marginal_fuel_mix, and consumed_fuel_mix."
+        },
+        {
+          "info": {
+            "name": "Get latest events for a region or postal code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singularity.energy/v1/region_events/:region_or_postal_code/latest",
+            "params": [
+              {
+                "name": "region_or_postal_code",
+                "value": "",
+                "type": "path",
+                "description": "Region/balancing-authority abbreviation or a postal code."
+              },
+              {
+                "name": "event_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "emission_factor",
+                "value": "",
+                "type": "query",
+                "description": "Optional emission factor source to apply."
+              }
+            ]
+          },
+          "docs": "Retrieve the most recent events for a region or postal code. Supports the carbon_intensity and generated_fuel_mix event types and an optional emission factor source."
+        },
+        {
+          "info": {
+            "name": "Find a single region event by deduplication key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singularity.energy/v1/region_events/:dedup_key",
+            "params": [
+              {
+                "name": "dedup_key",
+                "value": "",
+                "type": "path",
+                "description": "Deduplication key uniquely identifying a region event."
+              }
+            ]
+          },
+          "docs": "Find a single region event by deduplication key"
+        },
+        {
+          "info": {
+            "name": "Find multiple region events by deduplication keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.singularity.energy/v1/region_events/bulk-find",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Find multiple region events by deduplication keys"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

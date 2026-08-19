@@ -1,0 +1,528 @@
+{
+  "item": [
+    {
+      "id": "57e9acda-7a01-405a-a4af-2747323fb2cf",
+      "name": "Events",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eee961fb-d7fe-457a-b535-61af707cd72e",
+          "name": "Search region events over a time window",
+          "request": {
+            "name": "Search region events over a time window",
+            "description": {
+              "content": "Search region events for a region (or postal code) and event type over a time period, with optional filtering and pagination. Event types include carbon_intensity, generated_fuel_mix, marginal_fuel_mix, and consumed_fuel_mix.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "region_events",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>",
+                  "description": "Region or balancing authority abbreviation (e.g. ISONE, NYISO, PJM, IESO, CAISO, MISO, SPP, BPA). Mutually exclusive with postal_code."
+                },
+                {
+                  "disabled": false,
+                  "key": "postal_code",
+                  "value": "<string>",
+                  "description": "Postal code to resolve to a region (supported for ISONE, NYISO, PJM). Mutually exclusive with region."
+                },
+                {
+                  "disabled": false,
+                  "key": "event_type",
+                  "value": "<string>",
+                  "description": "(Required) Event type to retrieve."
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<dateTime>",
+                  "description": "(Required) ISO-8601 start of the time window."
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<dateTime>",
+                  "description": "(Required) ISO-8601 end of the time window."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Optional filter expression."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9d91ee5a-5667-4c67-b62c-84265a5a70f5",
+              "name": "A paginated list of region events.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "region_events",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postal_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "event_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"dedup_key\": \"string\",\n      \"region\": \"string\",\n      \"event_type\": \"interchange\",\n      \"start_date\": \"1956-11-01T20:01:58.146Z\",\n      \"data\": {}\n    },\n    {\n      \"dedup_key\": \"string\",\n      \"region\": \"string\",\n      \"event_type\": \"interchange\",\n      \"start_date\": \"2003-06-30T11:30:35.691Z\",\n      \"data\": {}\n    }\n  ],\n  \"meta\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fe73739b-90b7-4630-a628-23dafc90e106",
+          "name": "Get latest events for a region or postal code",
+          "request": {
+            "name": "Get latest events for a region or postal code",
+            "description": {
+              "content": "Retrieve the most recent events for a region or postal code. Supports the carbon_intensity and generated_fuel_mix event types and an optional emission factor source.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "region_events",
+                ":region_or_postal_code",
+                "latest"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "event_type",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "emission_factor",
+                  "value": "<string>",
+                  "description": "Optional emission factor source to apply."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "region_or_postal_code",
+                  "description": "(Required) Region/balancing-authority abbreviation or a postal code."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bb54112f-9743-4237-ac27-7dd3819182d4",
+              "name": "The latest event(s) for the region or postal code.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "region_events",
+                    ":region_or_postal_code",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "emission_factor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_or_postal_code",
+                      "description": "(Required) Region/balancing-authority abbreviation or a postal code."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dedup_key\": \"string\",\n  \"region\": \"string\",\n  \"event_type\": \"marginal_fuel_mix\",\n  \"start_date\": \"1982-12-21T11:40:23.767Z\",\n  \"data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f2aff134-cf6e-43e2-b857-12bac11a7e41",
+          "name": "Find a single region event by deduplication key",
+          "request": {
+            "name": "Find a single region event by deduplication key",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "region_events",
+                ":dedup_key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dedup_key",
+                  "description": "(Required) Deduplication key uniquely identifying a region event."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d775b65f-88c3-4db5-8c36-d7150471597f",
+              "name": "A single region event.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "region_events",
+                    ":dedup_key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dedup_key",
+                      "description": "(Required) Deduplication key uniquely identifying a region event."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dedup_key\": \"string\",\n  \"region\": \"string\",\n  \"event_type\": \"marginal_fuel_mix\",\n  \"start_date\": \"1982-12-21T11:40:23.767Z\",\n  \"data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8572a188-bdbf-4152-be35-58264fb226f2",
+          "name": "Find multiple region events by deduplication keys",
+          "request": {
+            "name": "Find multiple region events by deduplication keys",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "region_events",
+                "bulk-find"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dedup_keys\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ed3d6733-d3c1-452a-a5ce-0bf5ea0ed2b8",
+              "name": "The requested region events.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "region_events",
+                    "bulk-find"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dedup_keys\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"dedup_key\": \"string\",\n      \"region\": \"string\",\n      \"event_type\": \"carbon_intensity\",\n      \"start_date\": \"2013-06-15T07:28:02.745Z\",\n      \"data\": {}\n    },\n    {\n      \"dedup_key\": \"string\",\n      \"region\": \"string\",\n      \"event_type\": \"generated_fuel_mix\",\n      \"start_date\": \"1960-03-31T05:39:19.102Z\",\n      \"data\": {}\n    }\n  ],\n  \"meta\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.singularity.energy",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "377bd894-e9c3-4b4c-b8c0-fba3d0b538cd",
+    "name": "Singularity Grid Carbon Emissions Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Singularity Grid Carbon API provides hourly, location-specific electricity grid emissions intelligence - generated, consumed, and marginal carbon intensity, fuel mix, generation events, interchange (power flow), and emissions forecasts - across ISOs and balancing authorities in the U.S. and Canada. Endpoints and request shapes below are derived from Singularity's public documentation and the official open-source Python SDK (singularity-energy-python-sdk). Field-level schemas are documented at a representative level; consult the official docs for exhaustive response bodies.\n\nContact Support:\n Name: Singularity Support\n Email: support@singularity.energy",
+      "type": "text/plain"
+    }
+  }
+}

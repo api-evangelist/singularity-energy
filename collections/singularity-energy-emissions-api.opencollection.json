@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Singularity Grid Carbon Emissions API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Emissions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all emission factor sources and values",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.singularity.energy/v1/emissions/all-factors"
+          },
+          "docs": "Retrieves all available emission factor sources and their values."
+        },
+        {
+          "info": {
+            "name": "Calculate generated carbon intensity from a fuel mix",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.singularity.energy/v1/emissions/calculate-intensity/generated",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Computes the generated carbon-intensity emissions rate (lbs/MWh) for a supplied generated fuel mix, region, and emission factor source."
+        },
+        {
+          "info": {
+            "name": "Calculate marginal carbon intensity from fuel mix percentages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.singularity.energy/v1/emissions/calculate-intensity/marginal",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Computes the marginal carbon-intensity emissions rate (lbs/MWh) for supplied marginal fuel mix percentages, region, and emission factor source."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
