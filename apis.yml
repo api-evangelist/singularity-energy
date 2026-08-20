@@ -59,6 +59,8 @@ apis:
   humanURL: https://docs.singularity.energy/docs/singularity-api/grid-carbon-api
   baseURL: https://api.singularity.energy
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
