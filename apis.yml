@@ -7,6 +7,18 @@ description: Singularity Energy is a Boston-based grid decarbonization data comp
   - generated, consumed, and marginal carbon intensity, fuel mix, generation events,
   interchange, and 48-hour emissions forecasts across ISOs and balancing authorities
   in the U.S. and Canada.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
