@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Singularity Grid Carbon Emissions Events API
-  description: The Singularity Grid Carbon API provides hourly, location-specific electricity grid emissions intelligence - generated, consumed, and marginal carbon intensity, fuel mix, generation events, interchange (power flow), and emissions forecasts - across ISOs and balancing authorities in the U.S. and Canada. Endpoints and request shapes below are derived from Singularity's public documentation and the official open-source Python SDK (singularity-energy-python-sdk). Field-level schemas are documented at a representative level; consult the official docs for exhaustive response bodies.
+  title: Singularity Grid Carbon Events API
+  description: The Singularity Grid Carbon API provides hourly, location-specific electricity grid emissions intelligence - generated, consumed, and marginal carbon intensity, fuel mix, generation events, interchange (power flow), and emissions forecasts - across ISOs and balancing authorities in the U.S.
   termsOfService: https://singularity.energy
   contact:
     name: Singularity Support
@@ -166,6 +166,16 @@ paths:
                 $ref: '#/components/schemas/RegionEventList'
 components:
   schemas:
+    RegionEventList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegionEvent'
+        meta:
+          type: object
+          description: Pagination metadata (page, per_page, totals).
     RegionEvent:
       type: object
       description: A region event record (e.g. carbon intensity, fuel mix, or interchange) at a point in time.
@@ -189,16 +199,6 @@ components:
         data:
           type: object
           description: Event payload (intensity value in lbs/MWh, fuel-mix breakdown, or interchange values), shape varies by event_type.
-    RegionEventList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/RegionEvent'
-        meta:
-          type: object
-          description: Pagination metadata (page, per_page, totals).
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

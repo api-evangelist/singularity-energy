@@ -1,9 +1,7 @@
 {
   "provider": "singularity-energy",
   "sources": [
-    "singularity-energy-emissions-api-openapi.yml",
-    "singularity-energy-events-api-openapi.yml",
-    "singularity-energy-interchange-api-openapi.yml"
+    "_original/singularity-energy-openapi.yml"
   ],
   "outputs": [
     "singularity-energy-emissions-api-openapi.yml",
@@ -13,6 +11,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "singularity-energy-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "singularity-energy-openapi.yml: declared missing tag: Emissions",
+    "singularity-energy-openapi.yml: declared missing tag: Events",
+    "singularity-energy-openapi.yml: declared missing tag: Interchange",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "singularity-energy-emissions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "singularity-energy-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "singularity-energy-interchange-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
