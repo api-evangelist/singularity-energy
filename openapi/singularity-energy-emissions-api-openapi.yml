@@ -71,34 +71,6 @@ paths:
                 $ref: '#/components/schemas/IntensityResult'
 components:
   schemas:
-    MarginalIntensityRequest:
-      type: object
-      properties:
-        fuelmix_percents:
-          type: object
-          description: Marginal fuel mix as percentages by fuel category.
-        region:
-          type: string
-        source:
-          type: string
-          description: Emission factor source to use.
-      required:
-      - fuelmix_percents
-      - region
-    EmissionFactors:
-      type: object
-      description: Catalog of emission factor sources and their values, keyed by source.
-      additionalProperties: true
-    IntensityResult:
-      type: object
-      properties:
-        carbon_intensity:
-          type: number
-          description: Computed emissions rate in lbs/MWh.
-        region:
-          type: string
-        source:
-          type: string
     GeneratedIntensityRequest:
       type: object
       properties:
@@ -113,6 +85,34 @@ components:
       required:
       - genfuelmix
       - region
+    MarginalIntensityRequest:
+      type: object
+      properties:
+        fuelmix_percents:
+          type: object
+          description: Marginal fuel mix as percentages by fuel category.
+        region:
+          type: string
+        source:
+          type: string
+          description: Emission factor source to use.
+      required:
+      - fuelmix_percents
+      - region
+    IntensityResult:
+      type: object
+      properties:
+        carbon_intensity:
+          type: number
+          description: Computed emissions rate in lbs/MWh.
+        region:
+          type: string
+        source:
+          type: string
+    EmissionFactors:
+      type: object
+      description: Catalog of emission factor sources and their values, keyed by source.
+      additionalProperties: true
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
