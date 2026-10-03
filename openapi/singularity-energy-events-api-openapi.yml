@@ -166,6 +166,16 @@ paths:
                 $ref: '#/components/schemas/RegionEventList'
 components:
   schemas:
+    RegionEventList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegionEvent'
+        meta:
+          type: object
+          description: Pagination metadata (page, per_page, totals).
     RegionEvent:
       type: object
       description: A region event record (e.g. carbon intensity, fuel mix, or interchange) at a point in time.
@@ -189,16 +199,6 @@ components:
         data:
           type: object
           description: Event payload (intensity value in lbs/MWh, fuel-mix breakdown, or interchange values), shape varies by event_type.
-    RegionEventList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/RegionEvent'
-        meta:
-          type: object
-          description: Pagination metadata (page, per_page, totals).
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
