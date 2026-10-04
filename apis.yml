@@ -112,6 +112,9 @@ apis:
   - type: Documentation
     url: https://docs.singularity.energy/docs/singularity-api/region-flow
 common:
+- type: CapabilityMap
+  url: capabilities/singularity-energy-capability-edges.yml
+  name: Singularity Business Capability Map
 - type: AgenticAccess
   url: agentic-access/singularity-energy-agentic-access.yml
 - type: DomainSecurity
